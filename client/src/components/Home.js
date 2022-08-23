@@ -42,7 +42,7 @@ export default function Home() {
 	function handleOrderName(e) {
 		e.preventDefault();
 		dispatch(orderSort(e.target.value));
-		setOrder(`ordenado, ${e.target.value}`);
+		setOrder(e.target.value);
 	}
 
 	return (

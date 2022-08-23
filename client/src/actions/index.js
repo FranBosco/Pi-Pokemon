@@ -59,20 +59,20 @@ export const filterByType = (payload) => {
 	};
 };
 
-export const searchByName = (name) => {
+export function searchByName(name) {
 	return async function (dispatch) {
 		try {
-			var info = await axios.get(`http://localhost:3001/pokemon?name=${name}`);
+			const info = await axios.get(`http://localhost:3001/pokemon/${name}`);
 
 			return dispatch({
 				type: GET_BY_NAME,
-				payload: info.data
+				payload: [info.data]
 			});
 		} catch (error) {
 			alert('Please enter a valid name');
 		}
 	};
-};
+}
 
 export const typeFilter = (payload) => {
 	return {
@@ -98,10 +98,10 @@ export const orderSort = (payload) => {
 export const createPokemon = (payload) => {
 	return async function (dispatch) {
 		try {
-			var info = await axios.post('http://localhost:3001/pokemon');
+			const info = await axios.post('http://localhost:3001/pokemon', payload);
 			return dispatch({
 				type: CREATE_POKEMON,
-				payload: info.data
+				payload: info
 			});
 		} catch (error) {}
 	};
