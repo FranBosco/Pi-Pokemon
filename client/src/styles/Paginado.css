@@ -1,0 +1,17 @@
+.page-btn {
+	margin-left: 3%;
+	width: 80px;
+	height: 35px;
+	cursor: pointer;
+	border-radius: 6px;
+	border-color: orange;
+}
+
+.page-btn:hover {
+	background-color: yellow;
+	color: black;
+}
+
+.page-btn:active {
+	background-color: yellow;
+}

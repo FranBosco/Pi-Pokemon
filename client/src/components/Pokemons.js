@@ -16,8 +16,6 @@ export default function Pokemons() {
 	const lastPkmPage = currentPage * pkmPerPage;
 	const firstPkmPage = lastPkmPage - pkmPerPage;
 	const pkmInPage = pagePkm.slice(firstPkmPage, lastPkmPage);
-	console.log('page pkm', pagePkm);
-	console.log('pkm in page', pkmInPage);
 
 	const paginado = (page) => {
 		setCurrentPage(page);
@@ -43,7 +41,7 @@ export default function Pokemons() {
 								id={p.id}
 								name={p.name}
 								image={p.image}
-								types={p.type}
+								type={p.type}
 							/>
 						</div>
 					);

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getDetails } from '../actions';
+import '../styles/Details.css';
 
 export default function Details() {
 	let dispatch = useDispatch();
@@ -12,26 +13,28 @@ export default function Details() {
 
 	useEffect(() => {
 		dispatch(getDetails(id));
-	}, [dispatch]);
+	}, []);
 
 	return (
 		<>
 			<div className="detailsContainer">
 				<Link to="/home">
-					<button>return to home</button>
+					<button>Return to home</button>
 				</Link>
-				<div>
-					<h1 className="detailName">
-						{pkmDetail.id} - {pkmDetail.name}
-					</h1>
+				<div className="detailsCard">
+					<div className="detailName">
+						<h1>{pkmDetail.name}</h1>
+					</div>
 					<img
 						src={pkmDetail.image}
 						alt="img not found"
 						className="detailImg"
 					></img>
-					<h3 className="detailTypes">Types: {pkmDetail.type}</h3>
+
 					<div className="detailStats">
+						<h2>Stats: </h2>
 						<ul>
+							<li className="detailTypes">Types: {pkmDetail.type}</li>
 							<li>Hp: {pkmDetail.hp}</li>
 							<li>Attack: {pkmDetail.attack} </li>
 							<li>Defense: {pkmDetail.defense}</li>

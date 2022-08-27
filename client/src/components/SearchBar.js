@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchByName } from '../actions';
+import '../styles/SearchBar.css';
 
 export default function SearchBar() {
 	const [name, setName] = useState('');

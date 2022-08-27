@@ -42,10 +42,21 @@ export const getDetails = (id) => {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(`http://localhost:3001/pokemon/${id}`);
-			return dispatch({
-				type: GET_DETAILS,
-				payload: info.data
-			});
+			console.log('info', info);
+			if (info.data.id.length > 8) {
+				let pokemon = info.data;
+				console.log(pokemon);
+				pokemon.type = pokemon.types.map(({ name }) => name).toString();
+				return dispatch({
+					type: GET_DETAILS,
+					payload: pokemon
+				});
+			} else {
+				return dispatch({
+					type: GET_DETAILS,
+					payload: info.data
+				});
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -62,14 +73,16 @@ export const filterByType = (payload) => {
 export function searchByName(name) {
 	return async function (dispatch) {
 		try {
-			const info = await axios.get(`http://localhost:3001/pokemon/${name}`);
-
+			const info = await axios.get(
+				`http://localhost:3001/pokemon?name=${name}`
+			);
 			return dispatch({
 				type: GET_BY_NAME,
-				payload: [info.data]
+				payload: info.data
 			});
 		} catch (error) {
 			alert('Please enter a valid name');
+			console.log('error', error);
 		}
 	};
 }
@@ -99,10 +112,13 @@ export const createPokemon = (payload) => {
 	return async function (dispatch) {
 		try {
 			const info = await axios.post('http://localhost:3001/pokemon', payload);
+			console.log('createFunction', payload);
 			return dispatch({
 				type: CREATE_POKEMON,
-				payload: info
+				payload: info.data
 			});
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 };

@@ -3,3 +3,55 @@
 	align-items: center;
 	justify-content: space-around;
 }
+
+.pageTitle {
+	color: transparent;
+	border: solid black 5px;
+	height: 100px;
+	width: 400px;
+	margin-left: 55vh;
+	background: url('../styles//styleImages/palabra.jpg') center center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 450px;
+}
+
+.filterName {
+	width: 150px;
+	height: 30px;
+	cursor: pointer;
+	border-radius: 8px;
+}
+.filterCreated {
+	width: 150px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.homeRefreshBtn {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: -150px;
+	align-items: center;
+	position: fixed;
+	border-radius: 8px;
+	height: 30px;
+}
+
+.homeRefreshBtn:hover {
+	background-color: rgba(255, 255, 0, 0.689);
+}
+
+.filterType {
+	width: 150px;
+	height: 30px;
+	cursor: pointer;
+	border-radius: 8px;
+}
+
+.fotohome {
+	width: 400px;
+	height: 150px;
+	border: solid red 5px;
+}

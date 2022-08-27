@@ -5,7 +5,7 @@ import '../styles/Pokemon.css';
 export default function Pokemon({
 	id,
 	name,
-	types,
+	type,
 	image,
 	hp,
 	attack,
@@ -13,7 +13,6 @@ export default function Pokemon({
 	speed,
 	height,
 	weight,
-	sprite,
 	createdInDb
 }) {
 	return (
@@ -23,7 +22,13 @@ export default function Pokemon({
 					{id} - {name}
 				</h3>
 				<img className="cardImg" src={image} alt="img not found"></img>
-				<h4>Types: {types}</h4>
+				<h4>
+					Types: {type}
+					{/* {types?.map((el) => {
+						el.name;
+					})} */}
+				</h4>
+
 				<div>
 					<Link to={`/home/details/${id}`}>
 						<button>See more details</button>

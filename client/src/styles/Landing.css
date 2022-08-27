@@ -1,6 +1,7 @@
 .landingContainer {
-	background-image: url('../styles/styleImages/pokemon-pikachu.jpg');
-	background-repeat: no-repeat;
+	background: url('../styles/styleImages/test3.jpg') no-repeat bottom center
+		fixed;
+
 	background-size: cover;
 	width: 100vmax;
 	height: 100vh;

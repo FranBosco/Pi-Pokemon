@@ -5,7 +5,11 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: rgb(155, 155, 134);
+	/* background: linear-gradient(to bottom, black, rgb(152, 0, 0), black);
+	background-repeat: no-repeat; */
+	background: url('./styles/styleImages/pkballCreate.jpg') no-repeat center
+		center fixed;
+	background-size: cover;
 }
 
 code {

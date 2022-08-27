@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
 			height: { type: DataTypes.INTEGER },
 			weight: { type: DataTypes.INTEGER },
 			image: { type: DataTypes.STRING },
-			sprite: { type: DataTypes.STRING },
+
 			createdInDb: { type: DataTypes.BOOLEAN, defaultValue: true }
 		},
 		{ timestamps: false }

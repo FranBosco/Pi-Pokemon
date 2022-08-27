@@ -13,7 +13,7 @@ let initialState = {
 	allPokemons: [],
 	allPokemonsCopy: [],
 	allTypes: [],
-	pokemon: []
+	pokemon: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -29,6 +29,7 @@ function rootReducer(state = initialState, action) {
 				...state,
 				allTypes: action.payload
 			};
+
 		case GET_DETAILS:
 			return {
 				...state,
@@ -43,7 +44,7 @@ function rootReducer(state = initialState, action) {
 			const pokemonsFilterT = state.allPokemons;
 			const filter =
 				action.payload === 'all'
-					? pokemonsFilterT
+					? state.allPokemons
 					: pokemonsFilterT.filter((e) => e.type.includes(action.payload));
 
 			return {
@@ -52,10 +53,14 @@ function rootReducer(state = initialState, action) {
 			};
 		case CREATED_FILTER:
 			const pokemonsFilterC = state.allPokemons;
-			const pokemonsCreated =
+			let pokemonsCreated =
 				action.payload === 'created'
-					? pokemonsFilterC.filter((el) => el.createdInDb)
-					: pokemonsFilterC.filter((el) => !el.createdInDb);
+					? pokemonsFilterC.filter((el) => el.id.length > 7)
+					: action.payload === 'api'
+					? pokemonsFilterC.filter((el) => !el.id.length > 7)
+					: (pokemonsFilterC = state.allPokemons);
+			console.log('pkmcreated', pokemonsCreated);
+			console.log('allpkm', pokemonsFilterC);
 			return {
 				state,
 				allPokemons: pokemonsCreated
@@ -114,6 +119,10 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				allPokemons: nameArray
+			};
+		case CREATE_POKEMON:
+			return {
+				...state
 			};
 
 		default:
