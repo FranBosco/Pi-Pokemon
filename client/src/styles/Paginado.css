@@ -5,13 +5,14 @@
 	cursor: pointer;
 	border-radius: 6px;
 	border-color: orange;
+	font-weight: bold;
+	font-size: large;
 }
 
 .page-btn:hover {
 	background-color: yellow;
 	color: black;
 }
-
-.page-btn:active {
-	background-color: yellow;
+.page-btn:focus {
+	background-color: red;
 }

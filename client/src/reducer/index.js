@@ -41,10 +41,10 @@ function rootReducer(state = initialState, action) {
 				allPokemons: action.payload
 			};
 		case TYPE_FILTER:
-			const pokemonsFilterT = state.allPokemons;
+			const pokemonsFilterT = state.allPokemonsCopy;
 			const filter =
 				action.payload === 'all'
-					? state.allPokemons
+					? state.allPokemonsCopy
 					: pokemonsFilterT.filter((e) => e.type.includes(action.payload));
 
 			return {
@@ -52,18 +52,16 @@ function rootReducer(state = initialState, action) {
 				allPokemons: filter
 			};
 		case CREATED_FILTER:
-			const pokemonsFilterC = state.allPokemons;
+			const pokemonsFilterC = state.allPokemonsCopy;
 			let pokemonsCreated =
 				action.payload === 'created'
-					? pokemonsFilterC.filter((el) => el.id.length > 7)
-					: action.payload === 'api'
-					? pokemonsFilterC.filter((el) => !el.id.length > 7)
-					: (pokemonsFilterC = state.allPokemons);
-			console.log('pkmcreated', pokemonsCreated);
-			console.log('allpkm', pokemonsFilterC);
+					? pokemonsFilterC.filter((el) => isNaN(el.id))
+					: pokemonsFilterC.filter((el) => !isNaN(el.id));
+
 			return {
-				state,
-				allPokemons: pokemonsCreated
+				...state,
+				allPokemons:
+					action.payload === 'api&db' ? state.allPokemonsCopy : pokemonsCreated
 			};
 		case ORDER:
 			let nameArray =

@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons, getTypes } from '../actions';
-
 import { typeFilter, createdFilter, orderSort } from '../actions/index';
 import '../styles/Home.css';
-import Pokemons from './Pokemons';
+import Pokemon from './Pokemon';
+import Paginado from './Paginado';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
-import foto from '../styles/styleImages/palabra.jpg';
+import foto from '../styles/styleImages/pkmlogo.png';
+import Error from './Error';
 
 export default function Home() {
 	const dispatch = useDispatch();
 	//selecciono de mi estado el array de pokemons
+
+	const pagePkm = useSelector((state) => state.allPokemons);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [pkmPerPage, setPkmPerPage] = useState(12);
+	const lastPkmPage = currentPage * pkmPerPage;
+	const firstPkmPage = lastPkmPage - pkmPerPage;
+	const pkmInPage = pagePkm.slice(firstPkmPage, lastPkmPage);
+
+	const paginado = (page) => {
+		setCurrentPage(page);
+	};
+
+	useEffect(() => {
+		dispatch(getPokemons());
+	}, [dispatch]);
 
 	const types = useSelector((state) => state.allTypes);
 	const [order, setOrder] = useState('');
@@ -22,25 +38,24 @@ export default function Home() {
 		dispatch(getTypes());
 	}, []);
 
-	function handleClick(e) {
+	function handleClick() {
 		dispatch(getPokemons());
-	}
-
-	function handleSelectTypes(e) {
-		dispatch(getTypes(e.target.value));
 	}
 
 	function handleFilterTypes(e) {
 		dispatch(typeFilter(e.target.value));
+		setCurrentPage(1);
 	}
 
 	function handleFilterCreated(e) {
 		dispatch(createdFilter(e.target.value));
+		setCurrentPage(1);
 	}
 
 	function handleOrderName(e) {
 		dispatch(orderSort(e.target.value));
 		setOrder(e.target.value);
+		setCurrentPage(1);
 	}
 
 	return (
@@ -61,10 +76,10 @@ export default function Home() {
 				Refresh Homepage
 			</button>
 			<div className="sideBar">
-				<h2 className="orderTitle">Order by:</h2>
+				<h1 className="orderTitle">Order by:</h1>
 				<div className="filterContainer">
 					<div className="filterNameContainer">
-						<h3 className="homeh3">Alphabetic/Attack</h3>
+						<h2 className="AlphTitle">Alphabetic/Attack</h2>
 						<select className="filterName" onChange={(e) => handleOrderName(e)}>
 							<option value="default">Default</option>
 							<option value="az">A-Z</option>
@@ -75,7 +90,7 @@ export default function Home() {
 					</div>
 
 					<div className="createdByContainer">
-						<h3 className="homeh3">Created by</h3>
+						<h2 className="CreatedTitle">Created </h2>
 						<select
 							className="filterCreated"
 							onChange={(e) => handleFilterCreated(e)}
@@ -86,7 +101,7 @@ export default function Home() {
 						</select>
 					</div>
 					<div className="typesContainer">
-						<h3 className="homeh3">Type</h3>
+						<h2 className="TypeTitle">Type</h2>
 						<select
 							className="filterType"
 							onChange={(e) => handleFilterTypes(e)}
@@ -103,7 +118,30 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<Pokemons />
+			<>
+				<Paginado
+					pkmPerPage={pkmPerPage}
+					pagePkm={pagePkm.length}
+					paginado={paginado}
+				/>
+				{pkmInPage.length > 0 ? (
+					pkmInPage.map((p) => {
+						return (
+							<div key={p.id} className="pokemonCards">
+								<Pokemon
+									key={p.id}
+									id={p.id}
+									name={p.name}
+									image={p.image}
+									type={p.type}
+								/>
+							</div>
+						);
+					})
+				) : (
+					<Error />
+				)}
+			</>
 		</div>
 	);
 }

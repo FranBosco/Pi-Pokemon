@@ -10,7 +10,7 @@
 	height: 100px;
 	width: 400px;
 	margin-left: 55vh;
-	background: url('../styles//styleImages/palabra.jpg') center center;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -27,6 +27,7 @@
 	width: 150px;
 	height: 30px;
 	cursor: pointer;
+	border-radius: 8px;
 }
 
 .homeRefreshBtn {
@@ -53,5 +54,30 @@
 .fotohome {
 	width: 400px;
 	height: 150px;
-	border: solid red 5px;
+}
+
+.pokemonCards {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 400 px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	float: left;
+	margin-left: 50px;
+	margin-right: 60px;
+}
+
+.AlphTitle {
+	font-weight: bold;
+	color: white;
+}
+
+.TypeTitle {
+	color: white;
+}
+
+.orderTitle {
+	text-decoration: double underline;
 }

@@ -27,12 +27,17 @@ export default function Create() {
 	}, [dispatch]);
 	//para q vaya guardando las cosas q vamos escribiendo en los input
 	const handleChange = (e) => {
+		// cuando ejecute, traeme lo qeu ya habia en input y agregale el e.target.value en el valor con el name correspondiente, va a tomar el cambio en el input con ese name
 		setInput({
 			...input,
-			// cuando ejecute, traeme lo qeu ya habia en input y agregale el e.target.value en el valor con el name correspondiente, va a tomar el cambio en el input con ese name
 			[e.target.name]: e.target.value
 		});
-		setFormErrors(validate(input));
+		setFormErrors(
+			validate({
+				...input,
+				[e.target.name]: e.target.value
+			})
+		);
 	};
 
 	const handleSelect = (e) => {
@@ -40,7 +45,12 @@ export default function Create() {
 			...input,
 			type: [...input.type, e.target.value]
 		});
-		console.log('inputselect', input);
+		setFormErrors(
+			validate({
+				...input,
+				type: [...input.type, e.target.value]
+			})
+		);
 	};
 
 	const handleSubmit = (e) => {
@@ -61,8 +71,10 @@ export default function Create() {
 		history.push('/home');
 	};
 
-	const [disableBtn, setDisableBtn] = useState(true);
 	const [formErrors, setFormErrors] = useState({});
+	const [disableBtn, setDisableBtn] = useState(
+		Object.keys(formErrors).length > 1 ? true : false
+	);
 
 	function validateName(str) {
 		if (typeof str === 'number') return true;
@@ -236,14 +248,18 @@ export default function Create() {
 								{input.type.map((t) => t + ', ')}
 							</li>
 						</ul>
-						{console.log('input', input)}
-						{formErrors.types ? (
-							<h4 className="errorForm">{formErrors.types}</h4>
+
+						{formErrors.type ? (
+							<h4 className="errorForm">{formErrors.type}</h4>
 						) : (
 							false
 						)}
 					</div>
-					<button type="submit" className="submitBtnCreate">
+					<button
+						type="submit"
+						className="submitBtnCreate"
+						disabled={disableBtn}
+					>
 						Create
 					</button>
 				</div>

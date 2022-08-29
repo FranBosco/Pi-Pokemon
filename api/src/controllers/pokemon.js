@@ -150,7 +150,13 @@ const getAllPkm = async (req, res, next) => {
 			// } else {
 			// 	res.status(400).send('invalid name');
 			// }
-			if (pkmApi) res.status(200).send([pkmApi]);
+			if (pkmApi) {
+				res.status(200).send([pkmApi]);
+			} else {
+				res
+					.status(404)
+					.send(alert('No se encontraron pokemons con ese nombre'));
+			}
 
 			//si no me pasan un name, retorno todos los pokemon
 		} else {

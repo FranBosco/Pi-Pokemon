@@ -22,12 +22,7 @@ export default function Pokemon({
 					{id} - {name}
 				</h3>
 				<img className="cardImg" src={image} alt="img not found"></img>
-				<h4>
-					Types: {type}
-					{/* {types?.map((el) => {
-						el.name;
-					})} */}
-				</h4>
+				<h4>Types: {type}</h4>
 
 				<div>
 					<Link to={`/home/details/${id}`}>
