@@ -26,7 +26,6 @@ const dataApi = async () => {
 				defense: pokemon.stats[2].base_stat,
 				speed: pokemon.stats[5].base_stat,
 				image: pokemon.sprites.other.dream_world.front_default,
-
 				createdInDb: pokemon.createdInDb,
 				type: pokemon.types.map((pokemon) => pokemon.type.name).join(', ')
 			};
@@ -89,7 +88,7 @@ const getAllPkm = async (req, res) => {
 	try {
 		if (name) {
 			let aux = await allPokemon();
-			let aux2 = aux.filter((el) => el.name == name);
+			let aux2 = aux.filter((el) => el.name === name);
 
 			res.status(200).send(aux2);
 		} else {
@@ -97,7 +96,9 @@ const getAllPkm = async (req, res) => {
 
 			res.send(allPokemons);
 		}
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const pkmById = async (req, res) => {

@@ -6,8 +6,7 @@ export const GET_DETAILS = 'GET_DETAILS';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const TYPE_FILTER = 'TYPE_FILTER';
 export const CREATED_FILTER = 'CREATED_FILTER';
-export const ORDER = 'ORDER_BY_NAME';
-export const ERROR = 'ERROR';
+export const ORDER = 'ORDER';
 export const CREATE_POKEMON = 'CREATE_POKEMON';
 
 export function getPokemons() {
@@ -69,9 +68,7 @@ export const filterByType = (payload) => {
 			payload
 		};
 	} catch (error) {
-		return {
-			type: ERROR
-		};
+		console.log(error);
 	}
 };
 

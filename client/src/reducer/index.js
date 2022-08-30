@@ -6,8 +6,7 @@ import {
 	TYPE_FILTER,
 	CREATED_FILTER,
 	ORDER,
-	CREATE_POKEMON,
-	ERROR
+	CREATE_POKEMON
 } from '../actions';
 
 let initialState = {
@@ -31,7 +30,6 @@ function rootReducer(state = initialState, action) {
 				...state,
 				allTypes: action.payload
 			};
-
 		case GET_DETAILS:
 			return {
 				...state,
@@ -58,7 +56,7 @@ function rootReducer(state = initialState, action) {
 			let pokemonsCreated = pokemonsFilterC;
 			if (action.payload === 'created')
 				pokemonsCreated = pokemonsFilterC.filter((el) => isNaN(el.id));
-			if (action.payload === 'db')
+			if (action.payload === 'api')
 				pokemonsCreated = pokemonsFilterC.filter((el) => !isNaN(el.id));
 
 			return {
@@ -121,10 +119,6 @@ function rootReducer(state = initialState, action) {
 				allPokemons: nameArray
 			};
 		case CREATE_POKEMON:
-			return {
-				...state
-			};
-		case ERROR:
 			return {
 				...state
 			};
