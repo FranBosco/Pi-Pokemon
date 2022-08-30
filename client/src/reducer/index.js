@@ -6,7 +6,8 @@ import {
 	TYPE_FILTER,
 	CREATED_FILTER,
 	ORDER,
-	CREATE_POKEMON
+	CREATE_POKEMON,
+	ERROR
 } from '../actions';
 
 let initialState = {
@@ -22,7 +23,8 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				allPokemons: action.payload,
-				allPokemonsCopy: action.payload
+				allPokemonsCopy: action.payload,
+				pokemon: {}
 			};
 		case GET_ALL_TYPES:
 			return {
@@ -38,7 +40,7 @@ function rootReducer(state = initialState, action) {
 		case GET_BY_NAME:
 			return {
 				...state,
-				allPokemons: action.payload
+				allPokemons: action.payload.length ? action.payload : 'not found'
 			};
 		case TYPE_FILTER:
 			const pokemonsFilterT = state.allPokemonsCopy;
@@ -49,19 +51,19 @@ function rootReducer(state = initialState, action) {
 
 			return {
 				...state,
-				allPokemons: filter
+				allPokemons: filter.length ? filter : 'not found'
 			};
 		case CREATED_FILTER:
 			const pokemonsFilterC = state.allPokemonsCopy;
-			let pokemonsCreated =
-				action.payload === 'created'
-					? pokemonsFilterC.filter((el) => isNaN(el.id))
-					: pokemonsFilterC.filter((el) => !isNaN(el.id));
+			let pokemonsCreated = pokemonsFilterC;
+			if (action.payload === 'created')
+				pokemonsCreated = pokemonsFilterC.filter((el) => isNaN(el.id));
+			if (action.payload === 'db')
+				pokemonsCreated = pokemonsFilterC.filter((el) => !isNaN(el.id));
 
 			return {
 				...state,
-				allPokemons:
-					action.payload === 'api&db' ? state.allPokemonsCopy : pokemonsCreated
+				allPokemons: pokemonsCreated.length ? pokemonsCreated : 'not found'
 			};
 		case ORDER:
 			let nameArray =
@@ -119,6 +121,10 @@ function rootReducer(state = initialState, action) {
 				allPokemons: nameArray
 			};
 		case CREATE_POKEMON:
+			return {
+				...state
+			};
+		case ERROR:
 			return {
 				...state
 			};

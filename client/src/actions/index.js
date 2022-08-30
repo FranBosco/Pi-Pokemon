@@ -7,7 +7,7 @@ export const GET_BY_NAME = 'GET_BY_NAME';
 export const TYPE_FILTER = 'TYPE_FILTER';
 export const CREATED_FILTER = 'CREATED_FILTER';
 export const ORDER = 'ORDER_BY_NAME';
-
+export const ERROR = 'ERROR';
 export const CREATE_POKEMON = 'CREATE_POKEMON';
 
 export function getPokemons() {
@@ -42,10 +42,9 @@ export const getDetails = (id) => {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(`http://localhost:3001/pokemon/${id}`);
-			console.log('info', info);
+			console.log('info', info.data);
 			if (info.data.id.length > 8) {
 				let pokemon = info.data;
-				console.log(pokemon);
 				pokemon.type = pokemon.types.map(({ name }) => name).toString();
 				return dispatch({
 					type: GET_DETAILS,
@@ -64,10 +63,16 @@ export const getDetails = (id) => {
 };
 
 export const filterByType = (payload) => {
-	return {
-		type: FILTER_BY_TYPES,
-		payload
-	};
+	try {
+		return {
+			type: FILTER_BY_TYPES,
+			payload
+		};
+	} catch (error) {
+		return {
+			type: ERROR
+		};
+	}
 };
 
 export function searchByName(name) {
@@ -82,8 +87,7 @@ export function searchByName(name) {
 				payload: info.data
 			});
 		} catch (error) {
-			alert('Please enter a valid name');
-			console.log('error', error);
+			console.log(error);
 		}
 	};
 }
@@ -113,7 +117,6 @@ export const createPokemon = (payload) => {
 	return async function (dispatch) {
 		try {
 			const info = await axios.post('http://localhost:3001/pokemon', payload);
-			console.log('createFunction', payload);
 			return dispatch({
 				type: CREATE_POKEMON,
 				payload: info.data

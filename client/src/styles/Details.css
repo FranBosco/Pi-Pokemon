@@ -38,3 +38,10 @@
 	background-color: antiquewhite;
 	border-radius: 18px;
 }
+
+.ulTypes {
+	list-style: none;
+	justify-content: center;
+	align-items: center;
+	margin-left: -30px;
+}

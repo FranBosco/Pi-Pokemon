@@ -7,10 +7,12 @@
 	align-items: center;
 	font-size: medium;
 	font-weight: bold;
-	position: fixed;
+
 	margin-top: -110px;
+	background-color: yellow;
 }
 
 .navBtn:hover {
-	background-color: yellow;
+	background-color: rgb(205, 165, 6);
+	border: solid white 2px;
 }

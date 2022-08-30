@@ -1,34 +1,8 @@
 const axios = require('axios');
 const { Pokemon, Type } = require('../db');
 
-// funcion para traer los pokemon de la api
 const dataApi = async () => {
 	try {
-		// const apiURL = await axios.get(
-		// 	'https://pokeapi.co/api/v2/pokemon?offset=0&limit=40'
-
-		// 	// me trae 40 pkm con las props name y url, en url esta la info de cada pkm
-		// );
-		// const info = await apiURL.data.results.map(async (el) => {
-		// 	const pkmURL = (await axios.get(el.url)).data;
-
-		// 	// accedo a la prop url de cada pkm que es donde se encuentran las props necesarias
-		// 	return {
-		// 		id: pkmURL.id,
-		// 		name: pkmURL.name,
-		// 		hp: pkmURL.stats[0].base_stat,
-		// 		type: pkmURL.types.map((e) => e.type.name).join(', '),
-		// 		attack: pkmURL.stats[1].base_stat,
-		// 		defense: pkmURL.stats[2].base_stat,
-		// 		speed: pkmURL.stats[5].base_stat,
-		// 		height: pkmURL.height,
-		// 		weight: pkmURL.weight,
-		// 		image: pkmURL.sprites.other.dream_world.front_default
-		// 	};
-		// });
-
-		// const totalInfo = await Promise.all(info);
-		// return totalInfo;
 		let request = await axios.get(
 			'https://pokeapi.co/api/v2/pokemon?offset=0&limit=40'
 		);
@@ -95,7 +69,7 @@ const dataDb = async () => {
 		console.log(error);
 	}
 };
-//concateno los pkm que me traigo de la api y los de la db en una sola funcion
+
 const allPokemon = async () => {
 	try {
 		const apiPkm = await dataApi();
@@ -107,58 +81,17 @@ const allPokemon = async () => {
 		console.log(error);
 	}
 };
-// funcion para traer los pokemon de la base de datos
 
 //-----------------------------------------------------------------------------------------------------
-const getAllPkm = async (req, res, next) => {
+const getAllPkm = async (req, res) => {
 	const { name } = req.query;
-	//si me posan un name, busco en la api y en la db si alguno coincide
 
 	try {
 		if (name) {
 			let aux = await allPokemon();
 			let aux2 = aux.filter((el) => el.name == name);
-			console.log(name);
-			// res.status(200).send(aux2);
-			const pkmByName = await axios.get(
-				` https://pokeapi.co/api/v2/pokemon/${name}`
-			);
-			let pkmApi = {
-				id: pkmByName.data.id,
-				name: pkmByName.data.name,
-				hp: pkmByName.data.stats[0].base_stat,
-				attack: pkmByName.data.stats[1].base_stat,
-				defense: pkmByName.data.stats[2].base_stat,
-				speed: pkmByName.data.stats[5].base_stat,
-				height: pkmByName.data.height,
-				weight: pkmByName.data.weight,
-				image: pkmByName.data.sprites.other.dream_world.front_default,
-				type: pkmByName.data.types.map((e) => e.type.name).join(', ')
-			};
 
-			// const pkmDb = await Pokemon.findAll({
-			// 	where: {
-			// 		name: { [Op.like]: { name } }
-			// 	},
-			// 	include: { model: Type }
-			// });
-
-			// let pkm = pkmApi.concat(pkmDb);
-
-			// if (pkm.length) {
-			// 	res.status(200).send(pkm);
-			// } else {
-			// 	res.status(400).send('invalid name');
-			// }
-			if (pkmApi) {
-				res.status(200).send([pkmApi]);
-			} else {
-				res
-					.status(404)
-					.send(alert('No se encontraron pokemons con ese nombre'));
-			}
-
-			//si no me pasan un name, retorno todos los pokemon
+			res.status(200).send(aux2);
 		} else {
 			const allPokemons = await allPokemon();
 
@@ -167,8 +100,7 @@ const getAllPkm = async (req, res, next) => {
 	} catch (error) {}
 };
 
-//funcion para traer por id
-const pkmById = async (req, res, next) => {
+const pkmById = async (req, res) => {
 	const { id } = req.params;
 	try {
 		if (id.length > 7) {
@@ -203,7 +135,6 @@ const pkmById = async (req, res, next) => {
 	}
 };
 
-//funcion para crear un pokemon
 const createPkm = async (req, res) => {
 	try {
 		const {

@@ -10,7 +10,6 @@
 	height: 100px;
 	width: 400px;
 	margin-left: 55vh;
-
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -30,20 +29,6 @@
 	border-radius: 8px;
 }
 
-.homeRefreshBtn {
-	display: flex;
-	justify-content: flex-start;
-	margin-top: -150px;
-	align-items: center;
-	position: fixed;
-	border-radius: 8px;
-	height: 30px;
-}
-
-.homeRefreshBtn:hover {
-	background-color: rgba(255, 255, 0, 0.689);
-}
-
 .filterType {
 	width: 150px;
 	height: 30px;
@@ -54,6 +39,7 @@
 .fotohome {
 	width: 400px;
 	height: 150px;
+	cursor: pointer;
 }
 
 .pokemonCards {
@@ -79,5 +65,12 @@
 }
 
 .orderTitle {
-	text-decoration: double underline;
+	display: flex;
+	margin-left: 95vh;
+	background-color: white;
+	border-radius: 8px;
+	width: 250px;
+	margin-top: 50px;
+	align-items: center;
+	justify-content: center;
 }

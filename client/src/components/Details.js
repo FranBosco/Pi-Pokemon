@@ -13,7 +13,7 @@ export default function Details() {
 
 	useEffect(() => {
 		dispatch(getDetails(id));
-	}, []);
+	}, [dispatch, id]);
 
 	return (
 		<>
@@ -33,7 +33,7 @@ export default function Details() {
 
 					<div className="detailStats">
 						<h2>Stats: </h2>
-						<ul>
+						<ul className="ulTypes">
 							<li className="detailTypes">Types: {pkmDetail.type}</li>
 							<li>Hp: {pkmDetail.hp}</li>
 							<li>Attack: {pkmDetail.attack} </li>

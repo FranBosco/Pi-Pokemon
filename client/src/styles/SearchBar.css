@@ -4,8 +4,6 @@
 	cursor: pointer;
 	border-radius: 8px;
 	display: flex;
-	position: fixed;
-	margin-top: -50px;
 }
 
 .searchBtn {
@@ -14,13 +12,16 @@
 	border-radius: 8px;
 	cursor: pointer;
 	display: flex;
-	margin-top: 40px;
-	position: fixed;
-	margin-top: -5px;
 	align-items: center;
 	justify-content: center;
 }
 
 .searchBtn:hover {
 	background-color: yellow;
+}
+
+.searchcont {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -50px;
 }

@@ -6,7 +6,7 @@ export default function Error() {
 	return (
 		<div>
 			<h1 className="errortitle">Pokemon not found!!</h1>
-			<img className="errorimg" src={foto}></img>
+			<img className="errorimg" src={foto} alt="img not found"></img>
 		</div>
 	);
 }

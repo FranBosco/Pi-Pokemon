@@ -12,7 +12,6 @@ import Error from './Error';
 
 export default function Home() {
 	const dispatch = useDispatch();
-	//selecciono de mi estado el array de pokemons
 
 	const pagePkm = useSelector((state) => state.allPokemons);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -32,11 +31,9 @@ export default function Home() {
 	const types = useSelector((state) => state.allTypes);
 	const [order, setOrder] = useState('');
 
-	//reemplaza el matchdispatchtoprops
-	//lo que ponga dentro del [] reemplaza al componentdidmount, es decis, q cuando se monte lo que le pase en el array va a ejecutarse el useEffect
 	useEffect(() => {
 		dispatch(getTypes());
-	}, []);
+	}, [dispatch]);
 
 	function handleClick() {
 		dispatch(getPokemons());
@@ -60,23 +57,23 @@ export default function Home() {
 
 	return (
 		<div className="homeContainer">
-			<img src={foto} className="fotohome"></img>
+			<img
+				onClick={(e) => {
+					handleClick(e);
+				}}
+				src={foto}
+				className="fotohome"
+				alt="img not found"
+			></img>
 			<div>
 				<NavBar />
 			</div>
 			<div>
 				<SearchBar />
 			</div>
-			<button
-				className="homeRefreshBtn"
-				onClick={(e) => {
-					handleClick(e);
-				}}
-			>
-				Refresh Homepage
-			</button>
+
 			<div className="sideBar">
-				<h1 className="orderTitle">Order by:</h1>
+				<h1 className="orderTitle">Order by</h1>
 				<div className="filterContainer">
 					<div className="filterNameContainer">
 						<h2 className="AlphTitle">Alphabetic/Attack</h2>
@@ -124,7 +121,10 @@ export default function Home() {
 					pagePkm={pagePkm.length}
 					paginado={paginado}
 				/>
-				{pkmInPage.length > 0 ? (
+
+				{pkmInPage === 'not found' ? (
+					<Error />
+				) : pkmInPage.length > 0 ? (
 					pkmInPage.map((p) => {
 						return (
 							<div key={p.id} className="pokemonCards">
@@ -139,7 +139,7 @@ export default function Home() {
 						);
 					})
 				) : (
-					<Error />
+					<h1>Loading...</h1>
 				)}
 			</>
 		</div>

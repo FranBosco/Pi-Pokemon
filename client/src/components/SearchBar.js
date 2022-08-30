@@ -10,20 +10,21 @@ export default function SearchBar() {
 
 	function handleChange(e) {
 		e.preventDefault();
-		setName(e.target.value);
+		setName(e.target.value.toLowerCase());
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		if (name.length > 1) {
-			dispatch(searchByName(name));
+		if (name.length < 1 || name[0] === ' ' || typeof name !== 'string') {
+			alert('Please, enter a valid name');
 		} else {
-			alert('Debe ingresar un nombre de Pokemon valido');
+			dispatch(searchByName(name));
+			setName('');
 		}
 	}
 
 	return (
-		<div>
+		<div className="searchcont">
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<input
 					value={name}

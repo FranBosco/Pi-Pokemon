@@ -21,16 +21,15 @@ export default function Create() {
 		weight: '',
 		type: []
 	});
-	//useEffect para despachar los types
+
 	useEffect(() => {
 		dispatch(getTypes());
 	}, [dispatch]);
-	//para q vaya guardando las cosas q vamos escribiendo en los input
+
 	const handleChange = (e) => {
-		// cuando ejecute, traeme lo qeu ya habia en input y agregale el e.target.value en el valor con el name correspondiente, va a tomar el cambio en el input con ese name
 		setInput({
 			...input,
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value.toLowerCase()
 		});
 		setFormErrors(
 			validate({
@@ -55,20 +54,33 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(createPokemon(input));
-		alert('your pokemon has been created');
+		let error = Object.keys(validate(input));
+		if (error.length !== 0 || !input.type.length) {
+			alert('Please, fill in the fields correctly');
+			return;
+		} else {
+			dispatch(createPokemon(input));
+			alert('your pokemon has been created');
+			setInput({
+				name: '',
+				image: '',
+				hp: '',
+				attack: '',
+				defense: '',
+				speed: '',
+				height: '',
+				weight: '',
+				type: []
+			});
+			history.push('/home');
+		}
+	};
+
+	const handleDeleteT = (e) => {
 		setInput({
-			name: '',
-			image: '',
-			hp: '',
-			attack: '',
-			defense: '',
-			speed: '',
-			height: '',
-			weight: '',
+			...input,
 			type: []
 		});
-		history.push('/home');
 	};
 
 	const [formErrors, setFormErrors] = useState({});
@@ -77,8 +89,7 @@ export default function Create() {
 	);
 
 	function validateName(str) {
-		if (typeof str === 'number') return true;
-		if (typeof str !== 'string') return true;
+		if (!/^[a-zA-Z\s]*$/.test(input.name)) return true;
 		if (str.length < 1) return true;
 		if (str[0] === ' ') return true;
 	}
@@ -88,7 +99,7 @@ export default function Create() {
 	}
 
 	function validateTypes(input) {
-		if (!input) return true;
+		if (input.length < 1) return true;
 		if (input.length > 2) return true;
 	}
 
@@ -102,12 +113,16 @@ export default function Create() {
 		if (validateName(data.name)) errors.name = 'Invalid name';
 		if (validateImg(data.image)) errors.image = 'Invalid image url';
 		if (validateTypes(data.type)) errors.type = 'Select types: min 1 max 2';
-		if (validateStats(data.hp)) errors.hp = 'number > 0 and < 999';
-		if (validateStats(data.speed)) errors.speed = 'number > 0 and < 999';
-		if (validateStats(data.attack)) errors.attack = 'number > 0 and < 999';
-		if (validateStats(data.defense)) errors.defense = 'number > 0 and < 999';
-		if (validateStats(data.weight)) errors.weight = 'number > 0 and < 999';
-		if (validateStats(data.height)) errors.height = 'number > 0 and < 999';
+		if (validateStats(data.hp)) errors.hp = 'min value: 0, max value:999';
+		if (validateStats(data.speed)) errors.speed = 'min value: 0, max value:999';
+		if (validateStats(data.attack))
+			errors.attack = 'min value: 0, max value:999';
+		if (validateStats(data.defense))
+			errors.defense = 'min value: 0, max value:999';
+		if (validateStats(data.weight))
+			errors.weight = 'min value: 0, max value:999';
+		if (validateStats(data.height))
+			errors.height = 'min value: 0, max value:999';
 
 		return errors;
 	}
@@ -123,7 +138,7 @@ export default function Create() {
 					<div className="FormName">
 						<label>Name: </label>
 						<input
-							type="text"
+							type="string"
 							value={input.name}
 							name="name"
 							onChange={(e) => handleChange(e)}
@@ -243,11 +258,16 @@ export default function Create() {
 								</option>
 							))}
 						</select>
-						<ul>
-							<li className="TypesSelected" key={types.id}>
-								{input.type.map((t) => t + ', ')}
-							</li>
-						</ul>
+						<span>
+							{input.type.map((t) => t + ', ')}
+							<button
+								className="typesBtn"
+								type="button"
+								onClick={handleDeleteT}
+							>
+								x
+							</button>
+						</span>
 
 						{formErrors.type ? (
 							<h4 className="errorForm">{formErrors.type}</h4>

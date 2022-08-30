@@ -16,3 +16,7 @@
 .page-btn:focus {
 	background-color: red;
 }
+
+.page {
+	margin-left: 60px;
+}

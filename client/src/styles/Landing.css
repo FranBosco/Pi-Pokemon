@@ -9,13 +9,21 @@
 
 .landingTittle {
 	margin-top: 0px;
-	font-size: 100px;
+	font-size: 80px;
 }
 
 .landingBtn {
-	width: 100px;
-	height: 30px;
+	width: 160px;
+	height: 60px;
+	font-size: large;
+	font-weight: bold;
 	color: aliceblue;
 	background-color: red;
 	border-radius: 20px;
+	cursor: pointer;
+}
+
+.landingBtn:hover {
+	color: black;
+	background-color: yellow;
 }
