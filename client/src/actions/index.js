@@ -41,7 +41,7 @@ export const getDetails = (id) => {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(`http://localhost:3001/pokemon/${id}`);
-			console.log('info', info.data);
+
 			if (info.data.id.length > 8) {
 				let pokemon = info.data;
 				pokemon.type = pokemon.types.map(({ name }) => name).toString();
