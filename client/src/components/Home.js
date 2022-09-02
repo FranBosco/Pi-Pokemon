@@ -37,6 +37,7 @@ export default function Home() {
 
 	function handleClick() {
 		dispatch(getPokemons());
+		setCurrentPage(1);
 	}
 
 	function handleFilterTypes(e) {
@@ -139,7 +140,7 @@ export default function Home() {
 						);
 					})
 				) : (
-					<h1>Loading...</h1>
+					<h1 className="homeLoading">Loading...</h1>
 				)}
 			</>
 		</div>

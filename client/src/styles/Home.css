@@ -74,3 +74,12 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.homeLoading {
+	font-size: xx-large;
+	border: black 6px solid;
+	width: 300px;
+	margin-left: 500px;
+	border-radius: 9px;
+	background-color: antiquewhite;
+}

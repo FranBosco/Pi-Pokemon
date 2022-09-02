@@ -2,7 +2,6 @@ import React from 'react';
 import '../styles/Paginado.css';
 export default function Paginado({ pkmPerPage, pagePkm, paginado }) {
 	const pageNumbers = [];
-	let contador = 1;
 
 	for (let i = 1; i <= Math.ceil(pagePkm / pkmPerPage); i++) {
 		pageNumbers.push(i);
@@ -16,7 +15,7 @@ export default function Paginado({ pkmPerPage, pagePkm, paginado }) {
 					{pageNumbers &&
 						pageNumbers.map((number) => (
 							<button
-								key={contador++}
+								key={number}
 								className="page-btn"
 								onClick={() => paginado(number)}
 							>

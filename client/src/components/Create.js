@@ -9,6 +9,7 @@ import '../styles/Create.css';
 export default function Create() {
 	const dispatch = useDispatch();
 	const types = useSelector((state) => state.allTypes);
+	const pokemons = useSelector((state) => state.allPokemons);
 	const history = useHistory();
 	const [input, setInput] = useState({
 		name: '',
@@ -42,7 +43,7 @@ export default function Create() {
 	const handleSelect = (e) => {
 		setInput({
 			...input,
-			type: [...input.type, e.target.value]
+			type: [...new Set([...input.type, e.target.value])]
 		});
 		setFormErrors(
 			validate({
@@ -84,14 +85,18 @@ export default function Create() {
 	};
 
 	const [formErrors, setFormErrors] = useState({});
-	const [disableBtn, setDisableBtn] = useState(
-		Object.keys(formErrors).length > 1 ? true : false
-	);
 
 	function validateName(str) {
 		if (!/^[a-zA-Z\s]*$/.test(input.name)) return true;
 		if (str.length < 1) return true;
 		if (str[0] === ' ') return true;
+	}
+
+	function validateDuplicateName(str) {
+		let filtro = pokemons.filter((p) => p.name === str);
+		if (filtro.length) {
+			return true;
+		}
 	}
 
 	function validateImg(str) {
@@ -123,7 +128,8 @@ export default function Create() {
 			errors.weight = 'min value: 0, max value:999';
 		if (validateStats(data.height))
 			errors.height = 'min value: 0, max value:999';
-
+		if (validateDuplicateName(data.name))
+			errors.name = 'name has already exist';
 		return errors;
 	}
 
@@ -275,11 +281,7 @@ export default function Create() {
 							false
 						)}
 					</div>
-					<button
-						type="submit"
-						className="submitBtnCreate"
-						disabled={disableBtn}
-					>
+					<button type="submit" className="submitBtnCreate">
 						Create
 					</button>
 				</div>
